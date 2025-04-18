@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 class RsvpHomePage extends StatefulWidget {
@@ -12,39 +11,27 @@ class RsvpHomePage extends StatefulWidget {
 
 class _RsvpHomePageState extends State<RsvpHomePage> {
   final PageController _pageController = PageController(viewportFraction: 0.85);
-  int _currentPage = 0;
-  Timer? _timer;
 
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
+  final List<String> _carouselImages = [
+    'assets/wedcouple2.jpg',
+    'assets/wedcouple3.jpg',
+    'assets/wedcouple4.jpg',
+  ];
 
   @override
   void dispose() {
-    _timer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    double carouselSize = MediaQuery.of(context).size.width * 0.7;
+
     return SingleChildScrollView(
       child: Column(
         children: [
-          // Hero image with couple name overlay
+          // Hero image
           Stack(
             alignment: Alignment.center,
             children: [
@@ -53,6 +40,7 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
                 height: 300,
                 width: double.infinity,
                 fit: BoxFit.cover,
+                semanticLabel: 'Ivy and Matt wedding banner',
               ),
               Positioned(
                 bottom: 30,
@@ -68,7 +56,7 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
             ],
           ),
 
-          // Navigation bar with circular backgrounds
+          // Navigation icons
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Row(
@@ -82,23 +70,24 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
             ),
           ),
 
-          // Auto-moving carousel
+          // Manual PageView Carousel
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SizedBox(
-              height: 250,
-              child: PageView(
+              height: carouselSize,
+              width: carouselSize,
+              child: PageView.builder(
                 controller: _pageController,
-                children: [
-                  _buildCarouselImage('assets/wedcouple2.jpg'),
-                  _buildCarouselImage('assets/wedcouple3.jpg'),
-                  _buildCarouselImage('assets/wedcouple4.jpg'),
-                ],
+                itemCount: _carouselImages.length,
+                itemBuilder: (context, index) {
+                  return _buildCarouselImage(
+                      _carouselImages[index], carouselSize);
+                },
               ),
             ),
           ),
 
-          // See all memories button
+          // Button
           Padding(
             padding: const EdgeInsets.all(24.0),
             child: ElevatedButton(
@@ -127,9 +116,7 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
   Widget _buildNavItem(IconData icon, String label, int index) {
     return GestureDetector(
       onTap: () {
-        if (widget.onNavigate != null) {
-          widget.onNavigate!(index);
-        }
+        widget.onNavigate?.call(index);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -160,14 +147,19 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
     );
   }
 
-  Widget _buildCarouselImage(String assetPath) {
+  Widget _buildCarouselImage(String assetPath, double size) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Image.asset(
-          assetPath,
-          fit: BoxFit.cover,
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: Image.asset(
+            assetPath,
+            fit: BoxFit.cover,
+            semanticLabel: 'Wedding memory',
+          ),
         ),
       ),
     );
