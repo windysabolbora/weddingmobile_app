@@ -19,7 +19,7 @@ class MenuPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context); // Navigate back to the previous screen
           },
         ),
       ),

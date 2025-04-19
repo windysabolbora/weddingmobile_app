@@ -16,6 +16,12 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
     'assets/wedcouple2.jpg',
     'assets/wedcouple3.jpg',
     'assets/wedcouple4.jpg',
+    'assets/wedcouple5.jpg',
+    'assets/wedcouple6.jpg',
+    'assets/wedcouple7.jpg',
+    'assets/wedcouple8.jpg',
+    'assets/wedcouple9.jpg',
+    'assets/wedcouple10.jpg',
   ];
 
   @override
@@ -63,9 +69,8 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildNavItem(Icons.upload_outlined, 'Upload', 1),
-                _buildNavItem(Icons.chat_bubble_outline, 'Chat', 2),
-                _buildNavItem(Icons.calendar_today_outlined, 'Planning', 3),
-                _buildNavItem(Icons.people_outline, 'Us', 4),
+                _buildNavItem(Icons.calendar_today_outlined, 'Planning', 2),
+                _buildNavItem(Icons.people_outline, 'Us', 3),
               ],
             ),
           ),

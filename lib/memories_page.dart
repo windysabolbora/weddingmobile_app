@@ -9,7 +9,6 @@ class MemoriesPage extends StatefulWidget {
 }
 
 class _MemoriesPageState extends State<MemoriesPage> {
-  // List of album titles and images for each album
   final List<String> albumTitles = [
     "All Memories",
     "Cocktail",
@@ -25,31 +24,51 @@ class _MemoriesPageState extends State<MemoriesPage> {
       'assets/wedcouple6.jpg',
       'assets/wedcouple5.jpg',
       'assets/wedcouple6.jpg',
+      'assets/dinner4.jpg',
+      'assets/dinner5.jpg',
+      'assets/venue1.jpg',
+      'assets/venue2.jpg',
+      'assets/venue3.jpg',
     ],
     "Cocktail": [
       'assets/wedcouple5.jpg',
       'assets/wedcouple6.jpg',
     ],
     "Dinner": [
-      'assets/wedcouple6.jpg',
-      'assets/wedcouple5.jpg',
+      'assets/dinner1.jpg',
+      'assets/dinner2.jpg',
+      'assets/dinner3.jpg',
+      'assets/dinner4.jpg',
+      'assets/dinner5.jpg',
+      'assets/dinner6.jpg',
+      'assets/dinner7.jpg',
     ],
     "Party": [
-      'assets/wedcouple5.jpg',
-      'assets/wedcouple6.jpg',
-      'assets/wedcouple5.jpg',
+      'assets/party1.jpg',
+      'assets/party2.jpg',
+      'assets/party3.jpg',
+      'assets/party4.jpg',
+      'assets/party5.jpg',
     ],
     "Venue": [
-      'assets/wedcouple6.jpg',
+      'assets/venue1.jpg',
+      'assets/venue2.jpg',
+      'assets/venue3.jpg',
+      'assets/venue4.jpg',
+      'assets/venue5.jpg',
+      'assets/venue6.jpg',
+      'assets/venue7.jpg',
     ],
     "Preparation": [
-      'assets/wedcouple5.jpg',
-      'assets/wedcouple6.jpg',
-      'assets/wedcouple5.jpg',
+      'assets/prepare1.jpg',
+      'assets/prepare2.jpg',
+      'assets/prepare3.jpg',
+      'assets/prepare4.jpg',
+      'assets/prepare5.jpg',
     ],
   };
 
-  String selectedAlbum = "All Memories"; // Default selected album
+  String selectedAlbum = "All Memories";
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +85,8 @@ class _MemoriesPageState extends State<MemoriesPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(
+                context); // This will navigate back to the previous screen
           },
         ),
         actions: [
@@ -86,7 +106,6 @@ class _MemoriesPageState extends State<MemoriesPage> {
       ),
       body: Column(
         children: [
-          // Title section with scrolling album titles
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Column(
@@ -107,10 +126,8 @@ class _MemoriesPageState extends State<MemoriesPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                // Horizontal scrolling for album titles
                 SizedBox(
-                  height: 40, // Limit height for title scrolling
+                  height: 40,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: albumTitles.length,
@@ -142,13 +159,11 @@ class _MemoriesPageState extends State<MemoriesPage> {
               ],
             ),
           ),
-
-          // Photo grid based on selected album
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
@@ -158,7 +173,6 @@ class _MemoriesPageState extends State<MemoriesPage> {
                   String image = albumImages[selectedAlbum]![index];
                   return GestureDetector(
                     onTap: () {
-                      // Show a dialog when a photo is tapped
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -194,18 +208,15 @@ class _MemoriesPageState extends State<MemoriesPage> {
               ),
             ),
           ),
-
-          // Bottom Navigation Bar
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildNavItem(context, Icons.upload_outlined, 'Upload', 1),
-                _buildNavItem(context, Icons.chat_bubble_outline, 'Chat', 2),
                 _buildNavItem(
-                    context, Icons.calendar_today_outlined, 'Planning', 3),
-                _buildNavItem(context, Icons.people_outline, 'Us', 4),
+                    context, Icons.calendar_today_outlined, 'Planning', 2),
+                _buildNavItem(context, Icons.people_outline, 'Us', 3),
               ],
             ),
           ),
@@ -236,8 +247,8 @@ class _MemoriesPageState extends State<MemoriesPage> {
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              color: const Color(0xFFAA1E36),
+            style: const TextStyle(
+              color: Color(0xFFAA1E36),
               fontSize: 12,
             ),
           ),

@@ -5,107 +5,125 @@ class PlanningPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                'Wedding Schedule',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFFAA1E36),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            _buildEventCard(
-              time: '3:00 PM',
-              title: 'Ceremony',
-              location: 'Garden Pavilion',
-              description:
-                  'Join us as we exchange vows in the beautiful garden pavilion.',
-            ),
-            _buildEventCard(
-              time: '4:30 PM',
-              title: 'Cocktail Hour',
-              location: 'Terrace',
-              description:
-                  'Enjoy drinks and hors d\'oeuvres while we take photos.',
-            ),
-            _buildEventCard(
-              time: '6:00 PM',
-              title: 'Reception',
-              location: 'Grand Ballroom',
-              description: 'Dinner, dancing, and celebration!',
-            ),
-            _buildEventCard(
-              time: '10:00 PM',
-              title: 'After Party',
-              location: 'Lounge',
-              description:
-                  'Continue the celebration with late night snacks and drinks.',
-            ),
-            const SizedBox(height: 30),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Show RSVP confirmation dialog
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('RSVP Confirmation'),
-                        content: const Text(
-                            'Are you attending Ivy & Matt\'s wedding?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('We\'re sorry you can\'t make it.'),
-                                ),
-                              );
-                            },
-                            child: const Text('Decline'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Thank you for your RSVP!'),
-                                  backgroundColor: Color(0xFFAA1E36),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFAA1E36),
-                            ),
-                            child: const Text('Accept'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFAA1E36),
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(200, 45),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFAA1E36),
+        title: const Text(
+          'Wedding Schedule',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous screen
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'Wedding Schedule',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFFAA1E36),
                   ),
                 ),
-                child: const Text('RSVP Now'),
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+              _buildEventCard(
+                time: '3:00 PM',
+                title: 'Ceremony',
+                location: 'Garden Pavilion',
+                description:
+                    'Join us as we exchange vows in the beautiful garden pavilion.',
+              ),
+              _buildEventCard(
+                time: '4:30 PM',
+                title: 'Cocktail Hour',
+                location: 'Terrace',
+                description:
+                    'Enjoy drinks and hors d\'oeuvres while we take photos.',
+              ),
+              _buildEventCard(
+                time: '6:00 PM',
+                title: 'Reception',
+                location: 'Grand Ballroom',
+                description: 'Dinner, dancing, and celebration!',
+              ),
+              _buildEventCard(
+                time: '10:00 PM',
+                title: 'After Party',
+                location: 'Lounge',
+                description:
+                    'Continue the celebration with late night snacks and drinks.',
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Show RSVP confirmation dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('RSVP Confirmation'),
+                          content: const Text(
+                              'Are you attending Ivy & Matt\'s wedding?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'We\'re sorry you can\'t make it.'),
+                                  ),
+                                );
+                              },
+                              child: const Text('Decline'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Thank you for your RSVP!'),
+                                    backgroundColor: Color(0xFFAA1E36),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFAA1E36),
+                              ),
+                              child: const Text('Accept'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFAA1E36),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(200, 45),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: const Text('RSVP Now'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

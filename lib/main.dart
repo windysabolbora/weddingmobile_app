@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'memories_page.dart';
 import 'upload_page.dart';
-import 'chat_page.dart';
 import 'planning_page.dart';
 import 'us_page.dart';
 import 'search_page.dart';
@@ -103,10 +102,8 @@ class _MainScreenState extends State<MainScreen> {
       case 1:
         return const UploadPage();
       case 2:
-        return const ChatPage();
-      case 3:
         return const PlanningPage();
-      case 4:
+      case 3:
         return const UsPage();
       default:
         return RsvpHomePage(onNavigate: _onItemTapped);

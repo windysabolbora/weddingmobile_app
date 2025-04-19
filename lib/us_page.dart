@@ -5,157 +5,155 @@ class UsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          // Hero image
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Image.network(
-                'assets/wedcouple7.jpg',
-                height: 250,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              Container(
-                width: double.infinity,
-                color: Colors.black.withOpacity(0.5),
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: const Text(
-                  'Our Story',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFAA1E36),
+        title: const Text(
+          'Our Story',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context); // Go back
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Hero image (without overlay text)
+            Image.asset(
+              'assets/wedcouple.jpg',
+              height: 250,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
 
-          // Couple info
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 16),
-                Text(
-                  'Ivy & Matt',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFFAA1E36),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'June 15, 2025',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                const Text(
-                  'We met five years ago at a coffee shop in downtown Seattle. What started as a chance encounter turned into the love of our lives. After three years of dating, Matt proposed during our vacation in Italy, and now we\'re excited to celebrate our special day with all of you!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 32),
-                const Row(
-                  children: [
-                    Expanded(
-                      child: Divider(thickness: 1),
+            // Couple info
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 16),
+                  Text(
+                    'Ivy & Matt',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFFAA1E36),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        'Wedding Details',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'June 15, 2025',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'We met five years ago at a coffee shop in downtown Seattle. What started as a chance encounter turned into the love of our lives. After three years of dating, Matt proposed during our vacation in Italy, and now we\'re excited to celebrate our special day with all of you!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  const Row(
+                    children: [
+                      Expanded(
+                        child: Divider(thickness: 1),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          'Wedding Details',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Divider(thickness: 1),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                _buildInfoCard(
-                  icon: Icons.location_on,
-                  title: 'Venue',
-                  description:
-                      'Sunset Gardens\n123 Wedding Lane\nSeattle, WA 98101',
-                ),
-                _buildInfoCard(
-                  icon: Icons.hotel,
-                  title: 'Accommodations',
-                  description:
-                      'Grand Hotel Seattle\nSpecial rates available for wedding guests',
-                ),
-                _buildInfoCard(
-                  icon: Icons.card_giftcard,
-                  title: 'Registry',
-                  description:
-                      'We\'ve registered at:\nCrate & Barrel\nWilliams-Sonoma\nAmazon',
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    // Show contact dialog
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Contact Us'),
-                          content: const Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('For any questions about our wedding:'),
-                              SizedBox(height: 8),
-                              Text('Email: ivy.matt@wedding.com'),
-                              Text('Phone: (555) 123-4567'),
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Close'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFAA1E36),
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(200, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
+                      Expanded(
+                        child: Divider(thickness: 1),
+                      ),
+                    ],
                   ),
-                  child: const Text('Contact Us'),
-                ),
-              ],
+                  const SizedBox(height: 24),
+                  _buildInfoCard(
+                    icon: Icons.location_on,
+                    title: 'Venue',
+                    description:
+                        'Sunset Gardens\n123 Wedding Lane\nSeattle, WA 98101',
+                  ),
+                  _buildInfoCard(
+                    icon: Icons.hotel,
+                    title: 'Accommodations',
+                    description:
+                        'Grand Hotel Seattle\nSpecial rates available for wedding guests',
+                  ),
+                  _buildInfoCard(
+                    icon: Icons.card_giftcard,
+                    title: 'Registry',
+                    description:
+                        'We\'ve registered at:\nCrate & Barrel\nWilliams-Sonoma\nAmazon',
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Contact Us'),
+                            content: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('For any questions about our wedding:'),
+                                SizedBox(height: 8),
+                                Text('Email: ivy.matt@wedding.com'),
+                                Text('Phone: (555) 123-4567'),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Close'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFAA1E36),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(200, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: const Text('Contact Us'),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildInfoCard({
+  static Widget _buildInfoCard({
     required IconData icon,
     required String title,
     required String description,
