@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart'; // Assuming this is where your MainScreen class is
 
 class PlanningPage extends StatelessWidget {
   const PlanningPage({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class PlanningPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFAA1E36),
         title: const Text(
-          'Wedding Schedule',
+          'RSVP',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -18,9 +19,29 @@ class PlanningPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // Navigate back to the previous screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const MainScreen(initialIndex: 0), // Navigate back to home
+              ),
+            );
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              Navigator.pushNamed(context, '/search');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () {
+              Navigator.pushNamed(context, '/menu');
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -28,16 +49,6 @@ class PlanningPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Text(
-                  'Wedding Schedule',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFFAA1E36),
-                  ),
-                ),
-              ),
               const SizedBox(height: 24),
               _buildEventCard(
                 time: '3:00 PM',
@@ -64,63 +75,7 @@ class PlanningPage extends StatelessWidget {
                 title: 'After Party',
                 location: 'Lounge',
                 description:
-                    'Continue the celebration with late night snacks and drinks.',
-              ),
-              const SizedBox(height: 30),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Show RSVP confirmation dialog
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('RSVP Confirmation'),
-                          content: const Text(
-                              'Are you attending Ivy & Matt\'s wedding?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'We\'re sorry you can\'t make it.'),
-                                  ),
-                                );
-                              },
-                              child: const Text('Decline'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Thank you for your RSVP!'),
-                                    backgroundColor: Color(0xFFAA1E36),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFAA1E36),
-                              ),
-                              child: const Text('Accept'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFAA1E36),
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(200, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                  child: const Text('RSVP Now'),
-                ),
+                    'Continue the celebration with late-night snacks and drinks.',
               ),
             ],
           ),
