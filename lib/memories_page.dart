@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'main.dart';
 
 class MemoriesPage extends StatefulWidget {
-  const MemoriesPage({Key? key}) : super(key: key);
+  final File? imageFile; // Make imageFile nullable
+
+  const MemoriesPage({Key? key, this.imageFile}) : super(key: key);
 
   @override
   _MemoriesPageState createState() => _MemoriesPageState();
@@ -69,6 +73,18 @@ class _MemoriesPageState extends State<MemoriesPage> {
   };
 
   String selectedAlbum = "All Memories";
+  final ImagePicker _picker = ImagePicker();
+
+  // Function to pick an image from the gallery
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        albumImages[selectedAlbum]?.add(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +94,7 @@ class _MemoriesPageState extends State<MemoriesPage> {
         title: const Text(
           'RSVP',
           style: TextStyle(
+            fontFamily: 'Moldyen',
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
@@ -168,7 +185,7 @@ class _MemoriesPageState extends State<MemoriesPage> {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                 ),
-                itemCount: albumImages[selectedAlbum]!.length,
+                itemCount: albumImages[selectedAlbum]?.length ?? 0,
                 itemBuilder: (context, index) {
                   String image = albumImages[selectedAlbum]![index];
                   return GestureDetector(
@@ -218,6 +235,19 @@ class _MemoriesPageState extends State<MemoriesPage> {
                     context, Icons.calendar_today_outlined, 'Planning', 2),
                 _buildNavItem(context, Icons.people_outline, 'Us', 3),
               ],
+            ),
+          ),
+          // Upload button for picking images
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ElevatedButton.icon(
+              onPressed: _pickImage,
+              icon: const Icon(Icons.photo_camera),
+              label: const Text('Add Photo'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFAA1E36),
+                foregroundColor: Colors.white,
+              ),
             ),
           ),
         ],

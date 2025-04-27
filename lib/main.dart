@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreen(initialIndex: 0),
-        '/memories': (context) => MemoriesPage(),
+        '/memories': (context) => const MemoriesPage(imageFile: null),
         '/search': (context) => const SearchPage(),
         '/menu': (context) => const MenuPage(),
       },
