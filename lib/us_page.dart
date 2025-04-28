@@ -6,22 +6,6 @@ class UsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFAA1E36),
-        title: const Text(
-          'Our Story',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context); // Go back
-          },
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
