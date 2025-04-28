@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
+// The RsvpHomePage StatefulWidget and its corresponding State class
 class RsvpHomePage extends StatefulWidget {
-  final Function(int)? onNavigate;
+  final Function(int) onNavigate; // Add a callback to handle navigation
 
-  const RsvpHomePage({Key? key, this.onNavigate}) : super(key: key);
+  const RsvpHomePage({Key? key, required this.onNavigate}) : super(key: key);
 
   @override
   _RsvpHomePageState createState() => _RsvpHomePageState();
 }
 
 class _RsvpHomePageState extends State<RsvpHomePage> {
-  final PageController _pageController = PageController(viewportFraction: 0.85);
+  final PageController _pageController = PageController(
+      viewportFraction: 0.8); // Increased the fraction for a wider view
 
   final List<String> _carouselImages = [
     'assets/wedcouple2.jpg',
@@ -24,6 +26,8 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
     'assets/wedcouple10.jpg',
   ];
 
+  int _currentIndex = 0; // Track the current image index
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -32,7 +36,9 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double carouselSize = MediaQuery.of(context).size.width * 0.7;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double heroImageHeight = screenWidth * 0.3;
+    double carouselSize = screenWidth * 0.55; // Adjusted size to be wider
 
     return SingleChildScrollView(
       child: Column(
@@ -43,18 +49,18 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
             children: [
               Image.asset(
                 'assets/wedcouple.jpg',
-                height: 300,
+                height: heroImageHeight,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 semanticLabel: 'Ivy and Matt wedding banner',
               ),
               Positioned(
-                bottom: 30,
+                bottom: 15,
                 child: Text(
                   'IVY & MATT',
                   style: TextStyle(
                     color: const Color(0xFFAA1E36),
-                    fontSize: 28,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -64,7 +70,7 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
 
           // Navigation icons
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -75,26 +81,74 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
             ),
           ),
 
-          // Manual PageView Carousel
+          // Manual PageView Carousel with Cursor Dragging
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SizedBox(
               height: carouselSize,
               width: carouselSize,
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: _carouselImages.length,
-                itemBuilder: (context, index) {
-                  return _buildCarouselImage(
-                      _carouselImages[index], carouselSize);
+              child: GestureDetector(
+                onHorizontalDragUpdate: (details) {
+                  if (details.primaryDelta! > 0) {
+                    // Swipe right
+                    if (_currentIndex > 0) {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                  } else if (details.primaryDelta! < 0) {
+                    // Swipe left
+                    if (_currentIndex < _carouselImages.length - 1) {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                  }
                 },
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: _carouselImages.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _currentIndex = index; // Update the current index
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return _buildCarouselImage(
+                        _carouselImages[index], carouselSize);
+                  },
+                ),
               ),
+            ),
+          ),
+
+          // Dot Indicators
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(_carouselImages.length, (index) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  width: _currentIndex == index ? 12 : 8,
+                  height: _currentIndex == index ? 12 : 8,
+                  decoration: BoxDecoration(
+                    color: _currentIndex == index
+                        ? const Color(0xFFAA1E36)
+                        : Colors.grey,
+                    shape: BoxShape.circle,
+                  ),
+                );
+              }),
             ),
           ),
 
           // Button
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/memories');
@@ -102,9 +156,9 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFAA1E36),
                 foregroundColor: Colors.white,
-                minimumSize: const Size(200, 45),
+                minimumSize: const Size(180, 45),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
               child: const Text(
@@ -139,7 +193,7 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
               size: 20,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
             label,
             style: TextStyle(
@@ -156,7 +210,7 @@ class _RsvpHomePageState extends State<RsvpHomePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10),
         child: SizedBox(
           width: size,
           height: size,

@@ -15,11 +15,6 @@ class MemoriesPage extends StatefulWidget {
 class _MemoriesPageState extends State<MemoriesPage> {
   final List<String> albumTitles = [
     "All Memories",
-    "Cocktail",
-    "Dinner",
-    "Party",
-    "Venue",
-    "Preparation"
   ];
 
   final Map<String, List<String>> albumImages = {
@@ -33,37 +28,20 @@ class _MemoriesPageState extends State<MemoriesPage> {
       'assets/venue1.jpg',
       'assets/venue2.jpg',
       'assets/venue3.jpg',
-    ],
-    "Cocktail": [
-      'assets/wedcouple5.jpg',
-      'assets/wedcouple6.jpg',
-    ],
-    "Dinner": [
       'assets/dinner1.jpg',
       'assets/dinner2.jpg',
       'assets/dinner3.jpg',
-      'assets/dinner4.jpg',
-      'assets/dinner5.jpg',
       'assets/dinner6.jpg',
       'assets/dinner7.jpg',
-    ],
-    "Party": [
       'assets/party1.jpg',
       'assets/party2.jpg',
       'assets/party3.jpg',
       'assets/party4.jpg',
       'assets/party5.jpg',
-    ],
-    "Venue": [
-      'assets/venue1.jpg',
-      'assets/venue2.jpg',
-      'assets/venue3.jpg',
       'assets/venue4.jpg',
       'assets/venue5.jpg',
       'assets/venue6.jpg',
       'assets/venue7.jpg',
-    ],
-    "Preparation": [
       'assets/prepare1.jpg',
       'assets/prepare2.jpg',
       'assets/prepare3.jpg',
@@ -102,8 +80,7 @@ class _MemoriesPageState extends State<MemoriesPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(
-                context); // This will navigate back to the previous screen
+            Navigator.pop(context); // Navigate back
           },
         ),
         actions: [
@@ -136,43 +113,13 @@ class _MemoriesPageState extends State<MemoriesPage> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Select Album',
+                  'All Memories',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
                   ),
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  height: 40,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: albumTitles.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedAlbum = albumTitles[index];
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Chip(
-                            label: Text(albumTitles[index]),
-                            backgroundColor: selectedAlbum == albumTitles[index]
-                                ? const Color(0xFFAA1E36)
-                                : Colors.white,
-                            labelStyle: TextStyle(
-                              color: selectedAlbum == albumTitles[index]
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
               ],
             ),
           ),
@@ -235,19 +182,6 @@ class _MemoriesPageState extends State<MemoriesPage> {
                     context, Icons.calendar_today_outlined, 'Planning', 2),
                 _buildNavItem(context, Icons.people_outline, 'Us', 3),
               ],
-            ),
-          ),
-          // Upload button for picking images
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ElevatedButton.icon(
-              onPressed: _pickImage,
-              icon: const Icon(Icons.photo_camera),
-              label: const Text('Add Photo'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFAA1E36),
-                foregroundColor: Colors.white,
-              ),
             ),
           ),
         ],
